@@ -1,11 +1,10 @@
 const express = require("express");
 const axios = require("axios");
-const cors = require("cors"); // Import cors
+const cors = require("cors");
 
 const app = express();
 const PORT = 5000;
 
-// Enable CORS for requests from http://localhost:5173
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -14,7 +13,6 @@ app.use(
 
 app.use(express.json());
 
-// Define the endpoint for proxying the request
 app.get("/api/jobfair", async (req, res) => {
   try {
     const response = await axios.get(

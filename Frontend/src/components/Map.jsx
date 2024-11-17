@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import IslandFound from './IslandFound';
+import Lives from './Lives';
+import EndGame from './EndGame';
 
 const Map = () => {
     const matrixSize = 30;
     const [mapData, setMapData] = useState("");
     const [islands, setIslands] = useState([]);
-    const [selectedIsland, setSelectedIsland] = useState(null);
+    const [isIslandGuessed, setIsIslandGuessed] = useState(false);
+    const [lives, setLives] = useState(3);
+    const [endGame, setEndGame] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,19 +81,23 @@ const Map = () => {
     }, islands[0]);
 
     const handleIslandClick = (island) => {
-        setSelectedIsland(island);
-    };
-
-    const gridStyle = {
-        display: 'grid',
-        gridTemplateColumns: `repeat(${matrix.length}, 20px)`,
+        
+        if (island.average === IslandWithHighestAvg.average) {
+        setIsIslandGuessed(true);
+        }
+        else {
+            setLives(lives - 1);
+        }
+        if (lives === 1) {
+            setEndGame(true);
+        }
     };
 
     const getColorRange = (height) => {
         if (height === 0) return "0";
-        if (height >= 1 && height <= 100) return "1-100";
-        if (height >= 101 && height <= 250) return "101-250";
-        if (height >= 251 && height <= 500) return "251-500";
+        if (height >= 1 && height <= 250) return "1-250";
+        if (height >= 251 && height <= 350) return "251-350";
+        if (height >= 351 && height <= 500) return "351-500";
         if (height >= 501 && height <= 750) return "501-750";
         if (height >= 751 && height <= 900) return "751-900";
         if (height >= 901 && height <= 1000) return "901-1000";
@@ -97,58 +106,31 @@ const Map = () => {
 
     return (
         <>
-            <div className="map" style={gridStyle}>
-                {matrix.map((row, rowIndex) => (
-                    row.map((height, colIndex) => (
-                        <div
-                            key={`${rowIndex}-${colIndex}`}
-                            className="cell"
-                            data-height={getColorRange(height)}
-                            style={{ backgroundColor: getColorRange(height), cursor: height > 0 ? 'pointer' : 'default', }}
-                            onClick={() => {
-                                const clickedIsland = islands.find(island => island.coordinates.some(([x, y]) => x === rowIndex && y === colIndex));
-                                handleIslandClick(clickedIsland);
-                            }}
-                        />
-                    ))
-                ))}
-            </div>
-
-            <div>
-                <h1>Matrix Area Finder</h1>
-                <p>Number of islands: {islands.length}</p>
-                <div>
-                    {islands.map((area, index) => (
-                        <div key={index}>
-                            <h3>Area {index + 1} </h3>
-                            <p>Average Value: {area.average}</p>
-                        </div>
+            <div className="map-container">
+                <div className="map">
+                    {matrix.map((row, rowIndex) => (
+                        row.map((height, colIndex) => (
+                            <div
+                                key={`${rowIndex}-${colIndex}`}
+                                className="cell"
+                                data-height={getColorRange(height)}
+                                style={{ backgroundColor: getColorRange(height), cursor: height > 0 ? 'pointer' : 'default', }}
+                                onClick={() => {
+                                    const clickedIsland = islands.find(island => island.coordinates.some(([x, y]) => x === rowIndex && y === colIndex));
+                                    handleIslandClick(clickedIsland);
+                                }}
+                            />
+                        ))
                     ))}
                 </div>
-                <div>
-                    {IslandWithHighestAvg ? (
-                        <div>
-                            <h2>Area with the Highest Average Value</h2>
-                            <p>Coordinates: {IslandWithHighestAvg.coordinates.map(([x, y]) => `[${x}, ${y}]`).join(", ")}</p>
-                            <p>Average Value: {IslandWithHighestAvg.average}</p>
-                        </div>
-                    ) : (
-                        <p>No islands found.</p>
-                    )}
-                </div>
             </div>
-
-            <div>
-                    {selectedIsland ? (
-                        <div>
-                            <h2>Selected Area</h2>
-                            <p>Coordinates: {selectedIsland.coordinates.map(([x, y]) => `[${x}, ${y}]`).join(", ")}</p>
-                            <p>Average Value: {selectedIsland.average}</p>
-                        </div>
-                    ) : (
-                        <p>No area selected.</p>
-                    )}
-                </div>
+            <Lives lives={lives} />
+            {isIslandGuessed ? (
+                <IslandFound />
+            ) : null}
+            {endGame ? (
+                <EndGame />
+            ): null}
         </>
     );
 };

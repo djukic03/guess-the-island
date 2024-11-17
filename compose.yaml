@@ -1,0 +1,32 @@
+name: "guess-the-island"
+services:
+  frontend:
+    build: ./Frontend
+    container_name: guess-the-island-frontend
+    networks:
+      - guess-the-island-network
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    ports:
+      - 5173:5173
+    depends_on:
+      - backend
+    command: npm run dev
+
+  backend:
+    build: ./Backend
+    container_name: guess-the-island-backend
+    networks:
+      - guess-the-island-network
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+    command: ["nodemon", "server.js"]
+
+networks:
+  guess-the-island-network:
+    driver: bridge
