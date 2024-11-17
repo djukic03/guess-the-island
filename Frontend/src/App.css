@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  background-color: #384E1D;
+}
+
+.map {
+  display: grid;
+  gap: 0px;
+}
+
+/* Grid cell styling */
+.cell {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+
+.cell[data-height="0"] {
+  background-color: #4a90e2;
+}
+
+.cell[data-height="1-100"] {
+  background-color: #8d9d6c;
+}
+
+.cell[data-height="101-250"] {
+  background-color: #9ebb96;
+}
+
+.cell[data-height="251-500"] {
+  background-color: #f7ee87;
+}
+
+.cell[data-height="501-750"] {
+  background-color: #f5b68b;
+}
+
+.cell[data-height="751-900"] {
+  background-color: #f69b7e;
+}
+
+.cell[data-height="901-1000"] {
+  background-color: #ee7e65;
+}
+
+
+.start-title {
+  color: #4E341D;
+  font-size: 120px;
+  text-shadow: 0 0 20px #fff;
+  font-family: 'Chewy', system-ui;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.start-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+.start-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  button {
+    background-color: #4E341D;
+    border: 2px solid #fff;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 30px;
+    font-family: 'Chewy', system-ui;
+    text-decoration: none;
+    border-radius: 15px;
+  }
+}
