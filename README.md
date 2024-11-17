@@ -8,46 +8,31 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 Ensure you have the following installed on your system:
 
-- `Node.js`
-- `npm`
-  - To install Node.js and npm, visit the official Node.js website: https://nodejs.org/ and download the installer for your operating system. Follow the further setup instructions.
-- `Git`
-  - To install Git, download the Git installer from the official website: https://git-scm.com/download. Run the installer and follow further setup instructions.
-- If on Windows
+- `Docker Engine`
+  - To install Docker Engine visit the official Docker Docs website: https://docs.docker.com/engine/install/ and download Docker Desktop for your operating system. Follow the setup instructions.
 
 ### Installation
 
 - Clone this repository using these commands:
 
 ```bash
-git clone https://github.com/elab-development/klijentske-veb-tehnologije-2024-2022-0129-fitnes-veb-aplikacija.git
-cd klijentske-veb-tehnologije-2024-2022-0129-fitnes-veb-aplikacija
+git clone https://github.com/djukic03/guess-the-island
+cd guess-the-island
 ```
 
-- Install dependencies:
+- Run Docker Compose file
+  - When you start the game for the first time run this command to build the project and install all dependencies:
 
 ```bash
-npm install
+docker-compose up --build
 ```
 
-- Run the backend server:
+- Every next time you want to start the game, run this command:
 
 ```bash
-node server.js
+docker-compose up
 ```
 
-- In a separate terminal window, start the React development server:
+After this command you will get the localhost link looking like this: `http://localhost:4000` in your terminal window. Click on it and the app will open in your default browser.
 
-```bash
-npm run dev
-```
-
-After this command you will get the link looking like this: `http://localhost:4000` in your terminal window. Click on it and the app will open in your default browser.
-
-## Testing
-
-To run the tests, use the following command in your terminal window from the root directory of the project:
-
-```bash
-npx vitest
-```
+ENJOY!!!

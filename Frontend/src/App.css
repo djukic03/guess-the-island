@@ -85,6 +85,7 @@ button {
   font-family: 'Chewy', system-ui;
   font-weight: bold;
   font-style: normal;
+  margin-bottom: 0px;
 }
 
 .start-body {
@@ -94,6 +95,15 @@ button {
   justify-content: flex-start;
   height: 500px;
   margin-top: 50px;
+
+  h2 {
+    color: #4E341D;
+    font-size: 30px;
+    font-family: 'Chewy', system-ui;
+    text-shadow: 0 0 10px #fff;
+    margin-top: 50px;
+    margin-bottom: 70px;
+  }
 }
 
 .start-buttons {

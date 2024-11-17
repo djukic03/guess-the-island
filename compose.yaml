@@ -25,7 +25,7 @@ services:
     ports:
       - 5000:5000
     restart: unless-stopped
-    command: ["nodemon", "server.js"]
+    command: ["node", "server.js"]
 
 networks:
   guess-the-island-network:
