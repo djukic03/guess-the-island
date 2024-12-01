@@ -17,6 +17,8 @@ services:
   backend:
     build: ./Backend
     container_name: guess-the-island-backend
+    env_file:
+      - ./Backend/env/back.env
     networks:
       - guess-the-island-network
     volumes:
@@ -24,9 +26,41 @@ services:
       - /app/node_modules
     ports:
       - 5000:5000
+    depends_on:
+      database:
+        condition: service_healthy
     restart: unless-stopped
     command: ["node", "server.js"]
+
+  database:
+    image: mysql:8.0
+    container_name: guess_the_island_db
+    env_file:
+      - ./Database/env/db.env
+    networks:
+      - guess-the-island-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/my.cnf:/etc/mysql/conf.d/my-custom.cnf:ro
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "username",
+          "--password=password",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 6
 
 networks:
   guess-the-island-network:
     driver: bridge
+volumes:
+  mysql-data:
